@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AudioManager : MonoBehaviour
+{
+    private void Start()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    bool audioOn = true;
+    public void ToggleAudio()
+    {
+        audioOn = !audioOn;
+    }
+}
