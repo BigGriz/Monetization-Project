@@ -49,6 +49,7 @@ public class PlayerInventory : MonoBehaviour
         {
             xp -= xpRequired;
             level++;
+            CallbackHandler.instance.ChangeMenu(MENUOPTION.TALENT);
         }
         CallbackHandler.instance.UpdateXP(level, (float)xp / (float)xpRequired);
     }

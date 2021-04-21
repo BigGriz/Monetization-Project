@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5b1bacc6c33725498d8c2b518b108da, type: 3}
-  m_Name: Enflame
+  m_Name: Grit
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 4afb0f5d567c4504781ecb243c83b665, type: 3}
-  name: Enflame
-  level: 2
+  sprite: {fileID: 21300000, guid: 03915151bf0011f409d4dd754ce63e10, type: 3}
+  name: Grit
+  level: 0
   maxLevel: 10
   addedFlat: 0
   addedDamageFlat: 0
   addedDamageFlatPerLevel: 0
-  dmgMultiPerLvl: 1.5
-  dmgMultiBase: 0.1
-  dmgMulti: 0.38
-  addedHealth: 0
-  healthMultiplier: 0
+  dmgMultiPerLvl: 0
+  dmgMultiBase: 0
+  dmgMulti: 0
+  addedHealth: 5
+  healthMultiplier: 1.05

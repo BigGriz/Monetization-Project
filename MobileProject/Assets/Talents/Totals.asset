@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b1bacc6c33725498d8c2b518b108da, type: 3}
   m_Name: Totals
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  name: Totals
   level: 0
   maxLevel: 0
-  addedFlat: 171
+  addedFlat: 0
   addedDamageFlat: 0
   addedDamageFlatPerLevel: 0
   dmgMultiPerLvl: 0

@@ -7,6 +7,8 @@ public class CharacterUI : MonoBehaviour
     // Local Variables
     Animator anim;
     bool show;
+    public GameObject talentGroup;
+    public GameObject talentImagePrefab;
 
     public TMPro.TextMeshProUGUI damageText;
     public TMPro.TextMeshProUGUI atkSpdText;
@@ -18,15 +20,20 @@ public class CharacterUI : MonoBehaviour
         anim = GetComponent<Animator>();
     }
     #endregion Setup
-
-    private void Update()
+    #region Callbacks
+    private void Start()
     {
-        // Need some sort of menu manager
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            show = !show;
-            anim.SetBool("Show", show);
-        }
+        CallbackHandler.instance.addTalent += AddTalent;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.addTalent -= AddTalent;
+    }
+    #endregion Callbacks
+
+    public void AddTalent(TalentSO _talent)
+    {
+        Instantiate(talentImagePrefab, talentGroup.transform).GetComponent<UnityEngine.UI.Image>().sprite = _talent.sprite;
     }
 
     public void UpdateTextElements()

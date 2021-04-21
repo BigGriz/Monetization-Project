@@ -58,6 +58,7 @@ public class CallbackHandler : MonoBehaviour
     {
         if (addGear != null)
             addGear(_gear);
+
         UpdateUI();
     }
 
@@ -73,6 +74,7 @@ public class CallbackHandler : MonoBehaviour
     {
         if (updateTalents != null)
             updateTalents();
+
         UpdateUI();
     }
 
@@ -82,6 +84,13 @@ public class CallbackHandler : MonoBehaviour
         if (changeMenu != null)
             changeMenu(_option);
     }
+
+    public event Action<TalentSO> addTalent;
+    public void AddTalent(TalentSO _talent)
+    {
+        if (addTalent != null)
+            addTalent(_talent);
+    }
 }
 
 public enum MENUOPTION
@@ -89,5 +98,6 @@ public enum MENUOPTION
     CHARACTER,
     TALENT,
     SHOP,
-    BACKPACK
+    BACKPACK,
+    NONE
 }

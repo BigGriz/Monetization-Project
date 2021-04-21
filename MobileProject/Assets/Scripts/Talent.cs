@@ -1,54 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public enum TalentType
+public class Talent : MonoBehaviour, IPointerDownHandler
 {
-    Passive,
-    Active
-}
-
-public class Talent : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
-{
-    public TalentType type;
-    public Talent talentDependency;
-    TMPro.TextMeshProUGUI text;
 
     public TalentSO talent;
 
+    #region Setup
+    TMPro.TextMeshProUGUI text;
+    Image image;
+    TalentUI parent;
+
     private void Awake()
     {
+        parent = GetComponentInParent<TalentUI>();
         text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        text.SetText(talent.level.ToString());
-        talent = Instantiate(talent);
+        image = GetComponentInChildren<Image>();
+    }
+
+    public void SetupTalent(TalentSO _talent)
+    {
+        talent = _talent;
+        SetupTalent();
+    }
+    #endregion Setup
+
+    void SetupTalent()
+    {
+        text.SetText(talent.name);
+        image.sprite = talent.sprite;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (talent.level < talent.maxLevel && PlayerInventory.instance.SpendTalentPoint())
+        if (talent.level < talent.maxLevel && parent.clickable)
         {
-            if (talent.level == 0 && type == TalentType.Active)
-            {
-                // Add to Action Bar
-                talent.AddLevel();
-                text.SetText(talent.level.ToString());
-                Tooltip.instance.SetText(talent);
-                return;
-            }
             talent.AddLevel();
-            text.SetText(talent.level.ToString());
-            Tooltip.instance.SetText(talent);
-            CallbackHandler.instance.UpdateTalents();
-        }
-    }
+            text.SetText(talent.GetName());
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Tooltip.instance.SetText(talent);
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        Tooltip.instance.SetEmpty();
+            CallbackHandler.instance.AddTalent(talent);
+            CallbackHandler.instance.UpdateTalents();
+            CallbackHandler.instance.ChangeMenu(MENUOPTION.NONE);
+
+            parent.SetUnClickable();
+        }
     }
 }
