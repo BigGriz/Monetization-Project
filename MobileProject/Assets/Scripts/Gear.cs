@@ -10,12 +10,13 @@ public class Gear : ScriptableObject
     public int level;
     public int damage;
     public int upgradeCost;
-    public int cost;
+    public float armour;
 
     public void Upgrade()
     {
         if (PlayerInventory.instance.SpendCoin(upgradeCost))
         {
+            armour += 1;
             damage += 1;
             upgradeCost += 1;
             level += 1;

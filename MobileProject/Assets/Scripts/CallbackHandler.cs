@@ -7,6 +7,7 @@ public class CallbackHandler : MonoBehaviour
 {
     #region Singleton
     public static CallbackHandler instance;
+    Fader fader;
     private void Awake()
     {
         if (instance != null)
@@ -15,8 +16,20 @@ public class CallbackHandler : MonoBehaviour
             Destroy(this);
         }
         instance = this;
+        fader = GetComponentInChildren<Fader>();
+    }
+
+    private void Start()
+    {
+        TogglePause(false);
+        fader.Fade(false);
     }
     #endregion Singleton
+
+    public void Fade(bool _out)
+    {
+        fader.Fade(_out);
+    }
 
     public event Action updateUI;
     public void UpdateUI()
@@ -29,7 +42,7 @@ public class CallbackHandler : MonoBehaviour
     public void UpdateDamage(float _damage)
     {
         if (updateDamage != null)
-            updateDamage(_damage);      
+            updateDamage(_damage);
     }
 
     public event Action<int> updateCoins;
@@ -90,6 +103,42 @@ public class CallbackHandler : MonoBehaviour
     {
         if (addTalent != null)
             addTalent(_talent);
+    }
+
+    public event Action<Ability> unlockAbility;
+    public void UnlockAbility(Ability _ability)
+    {
+        if (unlockAbility != null)
+            unlockAbility(_ability);
+    }
+
+    public GameSettings settings;
+    public event Action<bool> togglePause;
+    public void TogglePause(bool _pause)
+    {
+        settings.paused = _pause;
+        if (togglePause != null)
+            togglePause(_pause);
+    }
+
+    public event Action spawnPortal;
+    public void SpawnPortal()
+    {
+        if (spawnPortal != null)
+            spawnPortal();
+    }
+
+    public event Action nextLevel;
+    public void NextLevel()
+    {
+        if (nextLevel != null)
+            nextLevel();
+    }
+
+    public void FadeToNextLevel()
+    {
+        Fade(true);
+        fader.fadeFunc += NextLevel;
     }
 }
 

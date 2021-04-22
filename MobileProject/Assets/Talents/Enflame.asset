@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4afb0f5d567c4504781ecb243c83b665, type: 3}
   name: Enflame
-  level: 2
+  level: 0
   maxLevel: 10
   addedFlat: 0
   addedDamageFlat: 0
   addedDamageFlatPerLevel: 0
   dmgMultiPerLvl: 1.5
   dmgMultiBase: 0.1
-  dmgMulti: 0.38
+  dmgMulti: 0.25
   addedHealth: 0
   healthMultiplier: 0

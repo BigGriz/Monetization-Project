@@ -18,24 +18,24 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
         }
     }
     #endregion Setup
-    Gear gear;
+    Ability ability;
 
     private void Start()
     {
-        EquipItem(gear);
+        SetupAbility(ability);
     }
 
-    public void EquipItem(Gear _gear)
+    public void SetupAbility(Ability _ability)
     {
-        gear = _gear;
+        ability = _ability;
 
-        if (gear)
+        if (ability)
         {
             image.enabled = true;
-            image.sprite = gear.sprite;
-            textComponents[0].SetText(gear.name);
-            textComponents[1].SetText(gear.damage.ToString());
-            textComponents[2].SetText(gear.cost.ToString());
+            image.sprite = ability.sprite;
+            textComponents[0].SetText(ability.name);
+            textComponents[1].SetText("");
+            textComponents[2].SetText(ability.cost.ToString());
 
             return;
         }
@@ -48,10 +48,10 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!gear)
+        if (!ability)
             return;
 
-        if (PlayerInventory.instance.SpendCoin(gear.cost))
-            CallbackHandler.instance.AddGear(Instantiate(gear));
+        if (PlayerInventory.instance.SpendCoin(ability.cost))
+            CallbackHandler.instance.UnlockAbility(ability);
     }
 }

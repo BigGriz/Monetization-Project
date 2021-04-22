@@ -5,13 +5,11 @@ using UnityEngine;
 public class LevelUI : MonoBehaviour
 {
     #region Setup
-    List<TMPro.TextMeshProUGUI> textComponents = new List<TMPro.TextMeshProUGUI>();
+
+    TMPro.TextMeshProUGUI text;
     private void Awake()
     {
-        foreach(TMPro.TextMeshProUGUI n in GetComponentsInChildren<TMPro.TextMeshProUGUI>())
-        {
-            textComponents.Add(n);
-        }
+        text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }
     #endregion Setup
     #region Callbacks
@@ -26,9 +24,8 @@ public class LevelUI : MonoBehaviour
     }
     #endregion Callbacks
 
-    public void UpdateLevel(string _area, int _level)
+    public void UpdateLevel(string _area, int _stage)
     {
-        textComponents[0].SetText(_area);
-        textComponents[1].SetText(_level.ToString());
+        text.SetText(_area + " - " + _stage);
     }
 }

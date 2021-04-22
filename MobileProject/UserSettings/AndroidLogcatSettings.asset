@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "2caa65c711037ece",
         "name": "com.biggrizgames.grizidle",
-        "processId": 17634,
+        "processId": 9112,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,61 +11,49 @@
         {
             "deviceId": "2caa65c711037ece",
             "name": "com.biggrizgames.grizidle",
-            "processId": 15616,
-            "exited": true
-        },
-        {
-            "deviceId": "2caa65c711037ece",
-            "name": "com.biggrizgames.grizidle",
-            "processId": 16699,
-            "exited": true
-        },
-        {
-            "deviceId": "2caa65c711037ece",
-            "name": "com.biggrizgames.grizidle",
-            "processId": 18470,
-            "exited": true
-        },
-        {
-            "deviceId": "2caa65c711037ece",
-            "name": "com.biggrizgames.grizidle",
-            "processId": 18921,
-            "exited": true
-        },
-        {
-            "deviceId": "2caa65c711037ece",
-            "name": "com.biggrizgames.grizidle",
-            "processId": 743,
-            "exited": true
-        },
-        {
-            "deviceId": "2caa65c711037ece",
-            "name": "com.unity3d.mobileremote",
-            "processId": 8629,
-            "exited": false
-        },
-        {
-            "deviceId": "2caa65c711037ece",
-            "name": "com.biggrizgames.grizidle",
             "processId": 12780,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "2caa65c711037ece",
             "name": "com.biggrizgames.grizidle",
             "processId": 15354,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "2caa65c711037ece",
             "name": "com.biggrizgames.grizidle",
             "processId": 17187,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "2caa65c711037ece",
             "name": "com.biggrizgames.grizidle",
             "processId": 17634,
+            "exited": true
+        },
+        {
+            "deviceId": "2caa65c711037ece",
+            "name": "com.biggrizgames.grizidle",
+            "processId": 25253,
+            "exited": true
+        },
+        {
+            "deviceId": "2caa65c711037ece",
+            "name": "com.biggrizgames.grizidle",
+            "processId": 3392,
+            "exited": false
+        },
+        {
+            "deviceId": "2caa65c711037ece",
+            "name": "com.biggrizgames.grizidle",
+            "processId": 5857,
+            "exited": false
+        },
+        {
+            "deviceId": "2caa65c711037ece",
+            "name": "com.biggrizgames.grizidle",
+            "processId": 9112,
             "exited": false
         }
     ],

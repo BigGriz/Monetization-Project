@@ -5,13 +5,13 @@ using UnityEngine;
 public class ShopUI : MonoBehaviour
 {
     [Header("Setup Fields")]
-    public List<Gear> gear;
+    public List<Ability> ability;
     public GameObject shopSlotPrefab;
     public GameObject layoutGroup;
 
     // Local Variables
     Animator anim;
-    bool show;
+    MENUOPTION option = MENUOPTION.SHOP;
 
     #region Setup
     private void Awake()
@@ -21,21 +21,29 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
-        foreach (Gear n in gear)
+        CallbackHandler.instance.changeMenu += ChangeMenu;
+
+        foreach (Ability n in ability)
         {
             ShopSlot temp = Instantiate(shopSlotPrefab, layoutGroup.transform).GetComponent<ShopSlot>();
-            temp.EquipItem(n);
+            temp.SetupAbility(n);
         }
+    }
+
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.changeMenu -= ChangeMenu;
     }
     #endregion Setup
 
-    private void Update()
+    public void ChangeMenu(MENUOPTION _option)
     {
-        // Need some sort of menu manager
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            show = !show;
-            anim.SetBool("Show", show);
-        }
+        anim.SetBool("Show", option == _option ? true : false);
+    }
+
+    public void CloseShop()
+    {
+        ChangeMenu(MENUOPTION.NONE);
+        CallbackHandler.instance.TogglePause(false);
     }
 }

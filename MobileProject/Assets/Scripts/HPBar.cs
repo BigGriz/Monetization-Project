@@ -6,12 +6,12 @@ public class HPBar : MonoBehaviour
 {
     Vector3 localScale;
 
-    private void Awake()
+    public virtual void Awake()
     {
         localScale = transform.localScale;
     }
 
-    public void UpdateHealth(float _hp)
+    public virtual void UpdateHealth(float _hp)
     {
         localScale.x = _hp;
         transform.localScale = localScale;

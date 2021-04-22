@@ -46,6 +46,8 @@ public class Talent : MonoBehaviour, IPointerDownHandler
             CallbackHandler.instance.ChangeMenu(MENUOPTION.NONE);
 
             parent.SetUnClickable();
+
+            CallbackHandler.instance.TogglePause(false);
         }
     }
 }

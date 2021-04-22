@@ -8,24 +8,29 @@ public class PlayerController : MonoBehaviour
     [Header("Setup Fields")]
     public float attackSpeed;
     Vector2 moveVec;
-    public GameObject hpBar;
+    public HPBar hp;
+    public PlayerEnergy en;
 
     [Header("Stats")]
     public float damage;
     public float moveSpeed;
     public float health;
     public float blockAmount;
+    public float energy;
+    public float energyRegen;
 
     // Local Variables
     float currentHealth;
+    float currentEnergy;
+    float energyTimer;
     Animator anim;
     Rigidbody2D rb;
     bool dashing;
     bool attacking;
     bool blocking;
+    bool flurry;
     [HideInInspector] public EnemyController collided;
     AttackHitBox ahb;
-    HPBar hp;
 
     public TalentSO talents;
 
@@ -33,6 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         CallbackHandler.instance.UpdateDamage((damage + PlayerInventory.instance.GetGearTotals() + talents.addedFlat) * talents.dmgMulti * attackSpeed);
     }
+
+
 
 
     public static PlayerController instance;
@@ -52,7 +59,7 @@ public class PlayerController : MonoBehaviour
         ahb = GetComponentInChildren<AttackHitBox>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        hp = GetComponentInChildren<HPBar>();
+        //hp = GetComponentInChildren<HPBar>();
 
         anim.SetFloat("SpeedMultiplier", attackSpeed);
     }
@@ -60,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         CallbackHandler.instance.updateUI += UpdateUI;
+        CallbackHandler.instance.togglePause += TogglePause;
 
         Invoke("UpdateUI", 0.1f);
     }
@@ -67,12 +75,157 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         CallbackHandler.instance.updateUI -= UpdateUI;
+        CallbackHandler.instance.togglePause -= TogglePause;
     }
+
+    public void TogglePause(bool _pause)
+    {
+        if (_pause)
+        {
+            rb.velocity = Vector3.zero;
+            anim.speed = 0.0f;
+            return;
+        }
+        anim.speed = 1.0f;
+    }
+
+    public void GiveEnergy()
+    {
+        if (CallbackHandler.instance.settings.paused)
+            return;
+
+        currentEnergy++;
+        currentEnergy = Mathf.Clamp(currentEnergy, 0, energy);
+        en.UpdateEnergy(currentEnergy / energy);
+    }
+
+    void UpdateEnergy()
+    {
+        // No passive energy regen during shield
+        if (!shield)
+        {
+            energyTimer -= Time.deltaTime;
+            if (energyTimer <= 0)
+            {
+                energyTimer += energyRegen;
+                currentEnergy++;
+            }
+        }
+
+        if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
+            GiveEnergy();
+
+        currentEnergy = Mathf.Clamp(currentEnergy, 0, energy);
+
+        if (vampirism)
+        {
+            currentEnergy -= Time.deltaTime * vampDrain;
+            if (currentEnergy <= 0)
+            {
+                vampirism = false;
+                Debug.LogWarning("Vamp fell off");
+            }
+        }
+
+        en.UpdateEnergy(currentEnergy / energy);
+    }
+
+    int flurryAttacks;
+    public void Flurry(float _cost)
+    {
+        if (!flurry && currentEnergy >= _cost)
+        {
+            flurryAttacks = 0;
+            flurry = true;
+            anim.speed = 2.0f;
+        }
+    }
+
+    bool vampirism;
+    float vampDrain = 6.0f;
+    public void Vampirism(float _cost)
+    {
+        vampirism = !vampirism;
+        vampDrain = _cost;
+
+        if (vampirism && currentEnergy > vampDrain)
+            vampirism = true;
+    }
+
+    bool shield;
+    public void Shield(float _cost)
+    {
+        shield = !shield;
+    }
+
+    void FlurryAttack()
+    {
+        // If in range - Attack
+        if (collided)
+        {
+            attacking = false;
+            anim.SetTrigger("AttackClick");
+            flurryAttacks++;
+            if (flurryAttacks >= 5)
+            {
+                flurry = false;
+                anim.speed = 1.0f;
+            }
+            return;
+        }
+        dashing = true;
+    }
+
+    bool rage;
+    float rageDuration = 30.0f;
+    float rageTimer;
+    public void Rage(float _cost)
+    {
+        if (currentEnergy >= _cost && !rage)
+        {
+            Debug.LogWarning("Successfully raging");
+            rage = true;
+            rageTimer = rageDuration;
+        }
+    }
+
+
+    void UpdateHealth()
+    {
+        if (currentHealth > health)
+            currentHealth -= Time.deltaTime * 3.0f;
+    }
+
+
 
     // Update is called once per frame
     void Update()
     {
+        if (CallbackHandler.instance.settings.paused)
+        {
+            return;
+        }
+
         rb.velocity = (collided) ? Vector2.zero : (dashing) ? moveVec * moveSpeed * 5.0f : moveVec * moveSpeed;
+        UpdateEnergy();
+        UpdateHealth();
+
+        if (rage)
+        {
+            rageTimer -= Time.deltaTime;
+            if (rageTimer <= 0)
+            {
+                rage = false;
+            }
+        }
+
+
+        if (flurry)
+        {
+            FlurryAttack();
+            SetAnims();
+            return;
+        }
 
         if (!IsPointerOverUIObject())
         {
@@ -126,6 +279,23 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float _damage)
     {
+        if (shield)
+        {
+            if (_damage / 2.0f < currentEnergy)
+            {
+                currentEnergy -= _damage / 2.0f;
+                _damage = _damage / 2.0f;
+            }
+            else
+            {
+                float temp = currentEnergy - _damage / 2.0f;
+                currentEnergy = 0.0f;
+                _damage += temp;
+                Debug.LogWarning("Shield Run Dry");
+            }
+            en.UpdateEnergy(currentEnergy / energy);
+        }
+
         currentHealth -= Mathf.Clamp(_damage - blockAmount, 0, _damage);
         hp.UpdateHealth(currentHealth / health);
         if (currentHealth <= 0.0f)
@@ -143,7 +313,14 @@ public class PlayerController : MonoBehaviour
     public void DealDamage()
     {
         if (collided)
-            collided.TakeDamage(GetVariable(VariableType.DAMAGE));
+        {
+            collided.TakeDamage(GetVariable(VariableType.DAMAGE) * (rage ? 2.0f : 1.0f));
+            if (vampirism)
+            {
+                currentHealth += (GetVariable(VariableType.DAMAGE) / 2.0f) * (rage ? 2.0f : 1.0f);
+                hp.UpdateHealth(currentHealth / health);
+            }
+        }
     }
 
     public static bool IsPointerOverUIObject()

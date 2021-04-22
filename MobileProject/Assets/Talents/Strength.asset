@@ -16,7 +16,7 @@ MonoBehaviour:
   name: Strength
   level: 0
   maxLevel: 10
-  addedFlat: 0
+  addedFlat: 1
   addedDamageFlat: 1
   addedDamageFlatPerLevel: 1.5
   dmgMultiPerLvl: 0

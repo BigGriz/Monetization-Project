@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
     public float health = 10.0f;
     public int xpReward;
     public int coinReward;
+    public int points;
+    public bool isBoss;
 
     // Local Variables
     Vector2 moveVec;
@@ -36,10 +38,35 @@ public class EnemyController : MonoBehaviour
 
         hpBar.SetActive(false);
     }
+    private void Start()
+    {
+        CallbackHandler.instance.togglePause += TogglePause;
+    }
+
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.togglePause -= TogglePause;
+    }
+
+    public void TogglePause(bool _pause)
+    {
+        if (_pause)
+        {
+            rb.velocity = Vector3.zero;
+            anim.speed = 0.0f;
+            return;
+        }
+        anim.speed = 1.0f;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (CallbackHandler.instance.settings.paused)
+        {
+            return;
+        }
+
         rb.velocity = (col || !bc.enabled) ? Vector2.zero : moveVec * moveSpeed;
 
         SetAnims();
@@ -65,7 +92,7 @@ public class EnemyController : MonoBehaviour
     public void DealDamage()
     {
         if (collided)
-            collided.TakeDamage(1.0f);
+            collided.TakeDamage(5.0f);
     }
 
     void Die()
@@ -78,6 +105,9 @@ public class EnemyController : MonoBehaviour
 
         PlayerInventory.instance.GiveCoin(coinReward);
         PlayerInventory.instance.GiveXP(xpReward);
+
+        if (isBoss)
+            CallbackHandler.instance.SpawnPortal();
     }
 
     #region CollisionChecks

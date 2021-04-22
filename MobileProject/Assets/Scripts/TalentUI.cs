@@ -27,6 +27,7 @@ public class TalentUI : MonoBehaviour
 
     private void Start()
     {
+        SetupTalents();
         GetTotals();
 
         CallbackHandler.instance.updateTalents += GetTotals;
@@ -42,6 +43,14 @@ public class TalentUI : MonoBehaviour
     }
     #endregion Setup
 
+    void SetupTalents()
+    {
+        for (int i = 0; i < talentOptions.Count; i++)
+        {
+            talentOptions[i] = Instantiate(talentOptions[i]);
+        }
+    }
+
     /// <summary>
     /// Adds talent to the total.
     /// </summary>
@@ -52,11 +61,24 @@ public class TalentUI : MonoBehaviour
         GetTotals();
     }
 
+    public List<GameObject> talentObjects;
+    public void CleanUp()
+    {
+        foreach(GameObject n in talentObjects)
+        {
+            Destroy(n);
+        }
+        talentObjects.Clear();
+    }
+
+
     /// <summary>
     /// Gets 3 Random Talents from list of options
     /// </summary>
     public void GetTalents()
     {
+        CleanUp();
+
         List<int> temp = new List<int>();
         for (int i = 0; i < talentOptions.Count; i++)
         {
@@ -72,7 +94,9 @@ public class TalentUI : MonoBehaviour
 
         foreach(int n in temp)
         {
-            Instantiate(talentPrefab, talentContainer.transform).GetComponent<Talent>().SetupTalent(talentOptions[n]);
+            GameObject talent = Instantiate(talentPrefab, talentContainer.transform);
+            talent.GetComponent<Talent>().SetupTalent(talentOptions[n]);
+            talentObjects.Add(talent);
         }
     }
 

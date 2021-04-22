@@ -8,6 +8,8 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
 {
     #region Setup
     public Image image;
+    public Image lockedImage;
+    public Image costImage;
     List<TMPro.TextMeshProUGUI> textComponents;
     private void Awake()
     {
@@ -18,17 +20,62 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    Gear gear;
+    public bool locked;
+    public Gear gear;
     private void Start()
     {
+        gear = Instantiate(gear);
         // Equip Gear (if any)
-        EquipItem(gear);
+        if (locked)
+        {
+            LockGear();
+        }
+        else
+        {
+            UnlockGear();
+        }
+        //EquipItem(gear);
     }
 
     #endregion Setup
     #region Utility
     public bool HasGear() { return (gear); }
     #endregion Utility
+
+    private void Update()
+    {
+        if (!locked)
+        {
+            textComponents[3].color = (PlayerInventory.instance.coins < gear.upgradeCost) ? Color.red : Color.white;
+        }
+    }
+
+    public void LockGear()
+    {
+        if (gear)
+        {
+            lockedImage.enabled = true;
+            image.enabled = true;
+            image.sprite = gear.sprite;
+            costImage.enabled = false;
+            textComponents[0].SetText(gear.name);
+            textComponents[1].SetText("");
+            textComponents[2].SetText("");
+            textComponents[3].SetText("");
+
+            return;
+        }
+    }
+
+    public void UnlockGear()
+    {
+        locked = false;
+        lockedImage.enabled = false;
+        costImage.enabled = true;
+        EquipItem(gear);
+    }
+
+
 
     public void EquipItem(Gear _gear)
     {
@@ -39,8 +86,8 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
             image.enabled = true;
             image.sprite = gear.sprite;
             textComponents[0].SetText(gear.name);
-            textComponents[1].SetText(gear.level.ToString());
-            textComponents[2].SetText(gear.damage.ToString());
+            textComponents[1].SetText("LVL: " + gear.level.ToString());
+            textComponents[2].SetText("DMG: " + gear.damage.ToString());
             textComponents[3].SetText(gear.upgradeCost.ToString());
 
             return;

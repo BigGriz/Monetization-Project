@@ -20,6 +20,8 @@ public class PlayerInventory : MonoBehaviour
     private void Start()
     {
         CallbackHandler.instance.addGear += AddGear;
+        CallbackHandler.instance.nextLevel += ResetPosition;
+        initPos = transform.position;
 
         Invoke("InitialSetup", 0.1f);
     }
@@ -32,6 +34,7 @@ public class PlayerInventory : MonoBehaviour
     private void OnDestroy()
     {
         CallbackHandler.instance.addGear -= AddGear;
+        CallbackHandler.instance.nextLevel -= ResetPosition;
     }
     #endregion Callbacks & Setup
 
@@ -42,14 +45,22 @@ public class PlayerInventory : MonoBehaviour
     public int talentPoints;
     public List<Gear> gear;
 
+
+    public Vector3 initPos;
+    public void ResetPosition()
+    {
+        transform.position = initPos;
+    }
+
     public void GiveXP(int _xp)
     {
         xp += _xp;
         if (xp >= xpRequired)
         {
-            xp -= xpRequired;
+            xp = 0;
             level++;
             CallbackHandler.instance.ChangeMenu(MENUOPTION.TALENT);
+            CallbackHandler.instance.TogglePause(true);
         }
         CallbackHandler.instance.UpdateXP(level, (float)xp / (float)xpRequired);
     }
