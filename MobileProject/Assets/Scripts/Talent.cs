@@ -30,7 +30,7 @@ public class Talent : MonoBehaviour, IPointerDownHandler
 
     void SetupTalent()
     {
-        text.SetText(talent.name);
+        text.SetText(talent.GetName());
         image.sprite = talent.sprite;
     }
 

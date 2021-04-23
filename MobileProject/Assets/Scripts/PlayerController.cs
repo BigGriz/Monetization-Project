@@ -207,6 +207,19 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.velocity = (collided) ? Vector2.zero : (dashing) ? moveVec * moveSpeed * 5.0f : moveVec * moveSpeed;
+
+        if (collided)
+        {
+            AudioManager.instance.StopAudio("Walk");
+            AudioManager.instance.StopAudio("Run");
+        }
+        else
+        {
+            AudioManager.instance.PlayAudio(dashing ? "Run" : "Walk");
+            AudioManager.instance.StopAudio(dashing ? "Walk" : "Run");
+        }
+
+
         UpdateEnergy();
         UpdateHealth();
 
@@ -307,13 +320,25 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         anim.SetTrigger("Death");
-        Destroy(this.gameObject, 3.0f);
+        AudioManager.instance.PlayAudio("Death");
+        CallbackHandler.instance.FadeToSameLevel();
+        anim.SetTrigger("Revive");
+    }
+
+    public void ResetCharacter()
+    {
+        currentHealth = health;
+        currentEnergy = 0;
+        hp.UpdateHealth(currentHealth / health);
+        en.UpdateEnergy(currentEnergy / energy);
     }
 
     public void DealDamage()
     {
         if (collided)
         {
+            AudioManager.instance.PlayAudio("Sword");
+
             collided.TakeDamage(GetVariable(VariableType.DAMAGE) * (rage ? 2.0f : 1.0f));
             if (vampirism)
             {

@@ -29,6 +29,11 @@ public class PlayerInventory : MonoBehaviour
     {
         CallbackHandler.instance.UpdateCoins(coins);
         CallbackHandler.instance.UpdateTalentPoints(talentPoints);
+
+        foreach(GearSlot n in gearContainer.GetComponentsInChildren<GearSlot>())
+        {
+            gear.Add(n.gear);
+        }
     }
 
     private void OnDestroy()
@@ -44,6 +49,7 @@ public class PlayerInventory : MonoBehaviour
     public int level = 1;
     public int talentPoints;
     public List<Gear> gear;
+    public GameObject gearContainer;
 
 
     public Vector3 initPos;

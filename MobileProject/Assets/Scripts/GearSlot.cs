@@ -44,6 +44,14 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
 
     private void Update()
     {
+        if (locked)
+        {
+            if (PlayerInventory.instance.level >= gear.levelRequirement)
+            {
+                UnlockGear();
+            }
+        }
+
         if (!locked)
         {
             textComponents[3].color = (PlayerInventory.instance.coins < gear.upgradeCost) ? Color.red : Color.white;
@@ -103,7 +111,7 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
     #region PointerEvents
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!gear)
+        if (!gear || locked)
             return;
 
         // If Gear - Upgrade & Update UI Elements

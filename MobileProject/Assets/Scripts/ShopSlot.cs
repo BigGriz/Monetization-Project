@@ -19,10 +19,12 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
     }
     #endregion Setup
     Ability ability;
+    public GameObject locked;
 
     private void Start()
     {
         SetupAbility(ability);
+        locked.SetActive(false);
     }
 
     public void SetupAbility(Ability _ability)
@@ -51,7 +53,10 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
         if (!ability)
             return;
 
-        if (PlayerInventory.instance.SpendCoin(ability.cost))
+        if (!locked.activeSelf && PlayerInventory.instance.SpendCoin(ability.cost))
+        {
             CallbackHandler.instance.UnlockAbility(ability);
+            locked.SetActive(true);
+        }
     }
 }

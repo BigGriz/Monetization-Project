@@ -99,6 +99,7 @@ public class EnemyController : MonoBehaviour
     {
         bc.enabled = false;
         anim.SetTrigger("Death");
+        AudioManager.instance.PlayAudio("Death");
         Destroy(this.gameObject, 3.0f);
         hpBar.SetActive(false);
 

@@ -352,6 +352,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1449664912563075199, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -32
+      objectReference: {fileID: 0}
     - target: {fileID: 1449664912755166443, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -387,6 +391,10 @@ PrefabInstance:
     - target: {fileID: 1449664912783729678, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449664913038139561, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -236
       objectReference: {fileID: 0}
     - target: {fileID: 1449664913148628424, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
       propertyPath: m_Pivot.x
@@ -476,6 +484,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1449664913546729432, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -163.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449664913740755761, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 576
+      objectReference: {fileID: 0}
     - target: {fileID: 2273907704730558873, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
       propertyPath: m_Spacing
       value: 60
@@ -554,6 +570,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
+--- !u!1 &1835692767 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1951286879348714032, guid: d9caa7efb7e65e74da754e55e5ab59ed, type: 3}
+  m_PrefabInstance: {fileID: 1821562975}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1931161565
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +776,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5075924594704171317, guid: e31f60794e993924bb9757dbbda28375, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5075924594704171319, guid: e31f60794e993924bb9757dbbda28375, type: 3}
       propertyPath: portalPrefab
       value: 
@@ -899,7 +924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4080822850689951388, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
       propertyPath: health
-      value: 100000
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4080822850689951388, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
       propertyPath: energyRegen
@@ -913,6 +938,30 @@ PrefabInstance:
       propertyPath: coins
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7485062395244151312, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
+      propertyPath: gearContainer
+      value: 
+      objectReference: {fileID: 1835692767}
+    - target: {fileID: 7485062395244151312, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
+      propertyPath: gear.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7485062395244151312, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
+      propertyPath: gear.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7485062395244151312, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
+      propertyPath: gear.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6fdac1cb5d6147640a425b596f3b76c6, type: 2}
+    - target: {fileID: 7485062395244151312, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
+      propertyPath: gear.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6fdac1cb5d6147640a425b596f3b76c6, type: 2}
+    - target: {fileID: 7485062395244151312, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
+      propertyPath: gear.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6fdac1cb5d6147640a425b596f3b76c6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9644d2df3d2813744826f0d404e65c59, type: 3}
 --- !u!4 &8413529789332700926 stripped

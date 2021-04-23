@@ -8,5 +8,6 @@ public class EnergyButton : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         PlayerController.instance.GiveEnergy();
+        Debug.LogWarning("Energy!");
     }
 }

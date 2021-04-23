@@ -134,11 +134,17 @@ public class CallbackHandler : MonoBehaviour
         if (nextLevel != null)
             nextLevel();
     }
-
+    
     public void FadeToNextLevel()
     {
         Fade(true);
         fader.fadeFunc += NextLevel;
+    }
+    public void FadeToSameLevel()
+    {
+        Fade(true);
+        fader.fadeFunc += NextLevel;
+        settings.stage--;
     }
 }
 

@@ -18,3 +18,4 @@ MonoBehaviour:
   damage: 1
   upgradeCost: 1
   armour: 0
+  levelRequirement: 20
