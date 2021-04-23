@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Rage
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: d38647a353eed254bb07d0e16a690d81, type: 3}
-  cost: 10
+  cost: 50
+  duration: 10
+  price: 10
+  timer: 0

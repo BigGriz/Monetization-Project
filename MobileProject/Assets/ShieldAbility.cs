@@ -7,6 +7,6 @@ public class ShieldAbility : AbilityUI
     public override void Press()
     {
         Debug.LogWarning("Shield Pressed");
-        PlayerController.instance.Shield(cost);
+        PlayerController.instance.Shield(ability.cost);
     }
 }

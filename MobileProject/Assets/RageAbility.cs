@@ -8,6 +8,9 @@ public class RageAbility : AbilityUI
     public override void Press()
     {
         Debug.LogWarning("Rage Pressed");
-        PlayerController.instance.Rage(cost);
+        if (PlayerController.instance.Rage(ability.cost, ability.duration))
+        {
+            ability.timer = ability.duration;
+        }
     }
 }

@@ -15,6 +15,8 @@ public class EnemySpawner : MonoBehaviour
     // should really be called gameinfo
     GameSettings settings;
 
+    public List<GameObject> spawnedEnemies;
+
     private void Awake()
     {
         // Seed RNG
@@ -39,9 +41,19 @@ public class EnemySpawner : MonoBehaviour
 
     public void NewLevel()
     {
-        Destroy(portal);
         offsetTiling = Vector2.zero;
+        CleanUp();
         SetupEnemies();
+    }
+
+    public void CleanUp()
+    {
+        foreach(GameObject n in spawnedEnemies)
+        {
+            Destroy(n);
+        }
+        spawnedEnemies.Clear();
+        Destroy(portal);
     }
 
     public void SpawnPortal()
@@ -67,6 +79,8 @@ public class EnemySpawner : MonoBehaviour
             // apply buffs to enemies
             EnemyController enemy = temp.GetComponent<EnemyController>();
             pointsToSpend -= enemy.points;
+
+            spawnedEnemies.Add(temp);
         }
 
         rand = Random.Range(0, bossPrefabs.Count);
@@ -74,6 +88,8 @@ public class EnemySpawner : MonoBehaviour
         GameObject boss = Instantiate(bossPrefabs[rand], this.transform);
         boss.transform.position += (Vector3)offsetTiling;
         offsetTiling += Random.Range(1.0f, 5.0f) * spacing;
+
+        spawnedEnemies.Add(boss);
     }
 
 }

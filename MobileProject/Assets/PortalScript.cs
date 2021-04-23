@@ -11,7 +11,7 @@ public class PortalScript : MonoBehaviour
             // Play Anim
             // fade out screen
             // add this callback to enemyspawner etc.
-
+            AudioManager.instance.PlayAudio("Portal");
             CallbackHandler.instance.FadeToNextLevel();
         }
     }

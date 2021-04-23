@@ -154,5 +154,6 @@ public enum MENUOPTION
     TALENT,
     SHOP,
     BACKPACK,
-    NONE
+    NONE,
+    IAP
 }

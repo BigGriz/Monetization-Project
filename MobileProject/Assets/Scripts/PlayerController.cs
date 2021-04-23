@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     // Local Variables
     float currentHealth;
-    float currentEnergy;
+    public float currentEnergy;
     float energyTimer;
     Animator anim;
     Rigidbody2D rb;
@@ -130,26 +130,34 @@ public class PlayerController : MonoBehaviour
         en.UpdateEnergy(currentEnergy / energy);
     }
 
-    int flurryAttacks;
-    public void Flurry(float _cost)
+    public float flurryTimer;
+    public float flurryClickTimer;
+    public bool Flurry(float _cost, float _duration)
     {
         if (!flurry && currentEnergy >= _cost)
         {
-            flurryAttacks = 0;
+            currentEnergy -= _cost;
+            flurryTimer = _duration;
             flurry = true;
-            anim.speed = 2.0f;
+            return true;
         }
+        return false;
     }
 
-    bool vampirism;
+    public bool vampirism;
     float vampDrain = 6.0f;
-    public void Vampirism(float _cost)
+    float vampDuration;
+    public bool Vampirism(float _cost, float _duration)
     {
-        vampirism = !vampirism;
-        vampDrain = _cost;
-
-        if (vampirism && currentEnergy > vampDrain)
+        if (!vampirism && currentEnergy >= _cost)
+        {
+            vampDrain = _cost;
+            vampDuration = _duration;
+        
             vampirism = true;
+            return true;
+        }
+        return false;
     }
 
     bool shield;
@@ -160,33 +168,41 @@ public class PlayerController : MonoBehaviour
 
     void FlurryAttack()
     {
-        // If in range - Attack
-        if (collided)
+        flurryTimer -= Time.deltaTime;
+        flurryClickTimer -= Time.deltaTime;
+        
+        if (flurryTimer <= 0.0f)
         {
-            attacking = false;
-            anim.SetTrigger("AttackClick");
-            flurryAttacks++;
-            if (flurryAttacks >= 5)
-            {
-                flurry = false;
-                anim.speed = 1.0f;
-            }
+            flurry = false;
             return;
         }
-        dashing = true;
+
+
+        // If in range - Attack
+        if (collided && flurryClickTimer <= 0.0f)
+        {
+            flurryClickTimer = 1.0f;
+            attacking = false;
+            anim.SetTrigger("AttackClick");
+            return;
+        }
+        if (!collided)
+            dashing = true;
     }
 
     bool rage;
-    float rageDuration = 30.0f;
     float rageTimer;
-    public void Rage(float _cost)
+    public bool Rage(float _cost, float _duration)
     {
         if (currentEnergy >= _cost && !rage)
         {
             Debug.LogWarning("Successfully raging");
+            currentEnergy -= _cost;
             rage = true;
-            rageTimer = rageDuration;
+            rageTimer = _duration;
+            return true;
         }
+        return false;
     }
 
 
@@ -232,12 +248,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (vampirism)
+        {
+            vampDuration -= Time.deltaTime;
+            if (vampDuration <= 0)
+            {
+                vampirism = false;
+            }
+        }
+
 
         if (flurry)
         {
             FlurryAttack();
-            SetAnims();
-            return;
         }
 
         if (!IsPointerOverUIObject())

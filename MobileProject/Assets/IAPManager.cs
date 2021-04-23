@@ -5,6 +5,19 @@ using UnityEngine.Purchasing;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
+    public static IAPManager instance;
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+            Debug.LogError("More than one IAPManager exists");
+            return;
+        }
+
+        instance = this;
+    }
+
     // Private Variables
     private static IStoreController storeController;
     private static IExtensionProvider storeExtensionProvider;
@@ -33,7 +46,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         UnityPurchasing.Initialize(this, builder);
     }
 
-    void BuyProductID(string productId)
+    public void BuyProductID(string productId)
     {
         if (IsInitialized())
         {

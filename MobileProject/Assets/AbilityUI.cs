@@ -7,11 +7,11 @@ using UnityEngine.EventSystems;
 public class AbilityUI : MonoBehaviour, IPointerDownHandler
 {
     public Ability ability;
-
-    public float cost;
+    public Image activeImage;
     public bool unlocked;
     Image image;
     public Image lockState;
+    public Image validEnergy;
 
     public void Awake()
     {
@@ -19,11 +19,31 @@ public class AbilityUI : MonoBehaviour, IPointerDownHandler
     }
     private void Start()
     {
+        ability.timer = 0;
+        activeImage.fillAmount = ability.timer / ability.duration;
+
         CallbackHandler.instance.unlockAbility += UnlockAbility;
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.unlockAbility -= UnlockAbility;
+    }
+
+    public virtual void Update()
+    {
+        if (CallbackHandler.instance.settings.paused)
+            return;
+
+        validEnergy.enabled = (ability.timer <= 0 && PlayerController.instance.currentEnergy <= ability.cost && unlocked);
+
+        if (ability.timer > 0)
+        {
+            ability.timer -= Time.deltaTime;
+            activeImage.fillAmount = ability.timer / ability.duration;
+            return;
+        }
+        ability.timer = 0;
+        activeImage.fillAmount = ability.timer / ability.duration;
     }
 
     public void UnlockAbility(Ability _ability)
@@ -36,7 +56,8 @@ public class AbilityUI : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Press();
+        if (unlocked)   
+            Press();
     }
 
     public virtual void Press()

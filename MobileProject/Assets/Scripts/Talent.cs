@@ -38,6 +38,8 @@ public class Talent : MonoBehaviour, IPointerDownHandler
     {
         if (talent.level < talent.maxLevel && parent.clickable)
         {
+            AudioManager.instance.PlayAudio("UI");
+
             talent.AddLevel();
             text.SetText(talent.GetName());
 

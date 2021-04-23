@@ -7,4 +7,7 @@ public class Ability : ScriptableObject
 {
     public Sprite sprite;
     public int cost;
+    public float duration;
+    public int price;
+    [HideInInspector] public float timer;
 }

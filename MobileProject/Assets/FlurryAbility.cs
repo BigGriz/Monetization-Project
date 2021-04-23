@@ -8,6 +8,7 @@ public class FlurryAbility : AbilityUI
     public override void Press()
     {
         Debug.LogWarning("Flurry Pressed");
-        PlayerController.instance.Flurry(cost);
+        if (PlayerController.instance.Flurry(ability.cost, ability.duration))
+            ability.timer = ability.duration;
     }
 }

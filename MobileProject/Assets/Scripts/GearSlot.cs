@@ -119,6 +119,7 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
         EquipItem(gear);
 
         CallbackHandler.instance.UpdateUI();
+        AudioManager.instance.PlayAudio("UI");
     }
     #endregion PointerEvents
 

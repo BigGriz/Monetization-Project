@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class AudioButton : MonoBehaviour
+public class AudioButton : MonoBehaviour, IPointerDownHandler
 {
     public Sprite play;
     public Sprite mute;
@@ -16,5 +17,11 @@ public class AudioButton : MonoBehaviour
     public void SwitchSprite()
     {
         image.sprite = (image.sprite == play) ? mute : play;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        AudioManager.instance.ToggleAudio();
+        SwitchSprite();
     }
 }

@@ -29,7 +29,7 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
 
     private void Update()
     {
-        textComponents[2].color = (PlayerInventory.instance.coins < ability.cost) ? Color.red : Color.white;
+        textComponents[2].color = (PlayerInventory.instance.coins < ability.price) ? Color.red : Color.white;
     }
 
     public void SetupAbility(Ability _ability)
@@ -42,7 +42,7 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
             image.sprite = ability.sprite;
             textComponents[0].SetText(ability.name);
             textComponents[1].SetText("");
-            textComponents[2].SetText(ability.cost.ToString());
+            textComponents[2].SetText(ability.price.ToString());
 
             return;
         }
@@ -58,8 +58,9 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
         if (!ability)
             return;
 
-        if (!locked.activeSelf && PlayerInventory.instance.SpendCoin(ability.cost))
+        if (!locked.activeSelf && PlayerInventory.instance.SpendCoin(ability.price))
         {
+            AudioManager.instance.PlayAudio("UI");
             CallbackHandler.instance.UnlockAbility(ability);
             locked.SetActive(true);
         }
