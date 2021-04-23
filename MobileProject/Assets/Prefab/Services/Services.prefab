@@ -566,8 +566,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3f16470b0d5244384993cdb3c9466d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSFX: []
-  swordSFX: []
+  deathSFX:
+  - {fileID: 8300000, guid: 8e5c25a1ff67e6048b2cae81900243fe, type: 3}
+  - {fileID: 8300000, guid: aac0c86529698c34d9a3c7380671841a, type: 3}
+  - {fileID: 8300000, guid: bf5b303cacddf8d479f5825b2c3533a3, type: 3}
+  - {fileID: 8300000, guid: 66a9eed31a4594f42bbe4e4d963f7691, type: 3}
+  - {fileID: 8300000, guid: 3bf22df9ec928074dbcda09b7ab62371, type: 3}
+  swordSFX:
+  - {fileID: 8300000, guid: da35c2b2dffb4064886a0f7d72efffd3, type: 3}
+  - {fileID: 8300000, guid: 156ec5c72911e174b9f2232243528762, type: 3}
+  - {fileID: 8300000, guid: 4228d946e7878eb4b93298ba814e6a6e, type: 3}
+  - {fileID: 8300000, guid: 887062610cd62af47ac89aff49a200e6, type: 3}
+  - {fileID: 8300000, guid: 0081265b662ced5438c355197b31425c, type: 3}
+  - {fileID: 8300000, guid: 1108630a52d24ba47bb716fe2e77b484, type: 3}
+  - {fileID: 8300000, guid: 5ce2f4fa7b05c7f4e80d3698a7c50151, type: 3}
+  - {fileID: 8300000, guid: 98f1e463970b1d94cb0bb95ab5268441, type: 3}
+  - {fileID: 8300000, guid: 0961eede512d44946aad24ccd12ddb68, type: 3}
 --- !u!1 &6739146494514396325
 GameObject:
   m_ObjectHideFlags: 0

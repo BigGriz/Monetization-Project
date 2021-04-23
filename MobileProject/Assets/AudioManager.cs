@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
         }
         instance = this;
 
-        AudioSource[] sources = GetComponentsInChildren<AudioSource>();
+        sources = GetComponentsInChildren<AudioSource>();
         foreach(AudioSource n in sources)
         {
             audio.Add(n.gameObject.name, n);
@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
     }
 
     Dictionary<string, AudioSource> audio = new Dictionary<string, AudioSource>();
+    AudioSource[] sources;
     public List<AudioClip> deathSFX;
     public List<AudioClip> swordSFX;
 
@@ -56,5 +57,10 @@ public class AudioManager : MonoBehaviour
     public void ToggleAudio()
     {
         audioOn = !audioOn;
+
+        foreach(AudioSource n in sources)
+        {
+            n.mute = !audioOn;
+        }
     }
 }

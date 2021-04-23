@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ShopScript : MonoBehaviour
 {
-    float timer;
+    /*float timer;
     PlayerController pc;
-    Vector2 offset;
+    Vector2 offset;*/
 
-    private void Update()
+    /*private void Update()
     {
         if (CallbackHandler.instance.settings.paused || !pc)
             return;
@@ -20,7 +20,7 @@ public class ShopScript : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-    }
+    }*/
 
     private void OnMouseDown()
     {
@@ -31,7 +31,7 @@ public class ShopScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>())
         {
@@ -39,5 +39,5 @@ public class ShopScript : MonoBehaviour
             offset = this.transform.position - pc.transform.position;
             timer = 30.0f;
         }
-    }
+    }*/
 }

@@ -27,6 +27,11 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
         locked.SetActive(false);
     }
 
+    private void Update()
+    {
+        textComponents[2].color = (PlayerInventory.instance.coins < ability.cost) ? Color.red : Color.white;
+    }
+
     public void SetupAbility(Ability _ability)
     {
         ability = _ability;
