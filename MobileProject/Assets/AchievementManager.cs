@@ -9,6 +9,9 @@ public class AchievementManager : MonoBehaviour
 { 
     //class start
     bool isUserAuthenticated = false;
+    int gameplayCount;
+
+    public TMPro.TextMeshProUGUI text;
     // Use this for initialization
     void Start()
     {
@@ -16,6 +19,13 @@ public class AchievementManager : MonoBehaviour
 
         PlayGamesPlatform.Activate(); // activate playgame platform
         PlayGamesPlatform.DebugLogEnabled = true; //enable debug log
+
+        gameplayCount = PlayerPrefs.GetInt("GameplayCount");
+        gameplayCount++;
+        text.SetText(gameplayCount.ToString());
+
+        PlayerPrefs.SetInt("GameplayCount", gameplayCount);
+        CheckLoginAchieves();
     }
     // Update is called once per frame
     void Update()
@@ -36,11 +46,26 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
+    void CheckLoginAchieves()
+    {
+        if (gameplayCount >= 5)
+            Social.ReportProgress(GrizzyAchievements.achievement_grinding_away, 100, (bool success) => { });
+        if (gameplayCount >= 4)
+            Social.ReportProgress(GrizzyAchievements.achievement_still_adventuring, 100, (bool success) => { });
+        if (gameplayCount >= 3)
+            Social.ReportProgress(GrizzyAchievements.achievement_doin_your_thang, 100, (bool success) => { });
+        if (gameplayCount >= 2)
+            Social.ReportProgress(GrizzyAchievements.achievement_on_an_adventure, 100, (bool success) => { });
+        if (gameplayCount >= 1)
+            Social.ReportProgress(GrizzyAchievements.achievement_new_beginnings, 100, (bool success) => { });
+        if (gameplayCount > 0)
+            OpenAchievements();
+    }
+
     public void GetAchieve()
     {
-        Social.ReportProgress(GrizzyAchievements.achievement_on_an_adventure, 100, (bool success) => { });
+        //Social.ReportProgress(GrizzyAchievements.achievement_on_an_adventure, 100, (bool success) => { });
         OpenAchievements();
-        Debug.Log("Achieve Pressed");
     }
 
     public void OpenAchievements()

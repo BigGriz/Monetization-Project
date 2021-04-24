@@ -55,15 +55,18 @@ public class IAPManager : MonoBehaviour, IStoreListener
             {
                 Debug.Log("Purchasing Product");
                 storeController.InitiatePurchase(product);
+                RemoveAdsButton.instance.ChangeText("Purchased!");
             }
             else
             {
                 Debug.Log("Product either is not found or not available for purchase");
+                RemoveAdsButton.instance.ChangeText("Not Found!");
             }
         }
         else
         {
             Debug.Log("BuyProductID FAIL. Not initialized.");
+            RemoveAdsButton.instance.ChangeText("Not Initialized!");
         }
     }
 

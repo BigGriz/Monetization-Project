@@ -32,20 +32,13 @@ public class AdManager : MonoBehaviour, IUnityAdsListener
         Advertisement.Initialize(storeID, testMode);
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            ShowInterstitialAd();
-        }
-        if (Input.GetKey(KeyCode.Alpha2))
-        {
-            ShowVideoAd();
-        }
-    }
-
     public void ShowVideoAd()
     {
+        Debug.LogWarning("Purchased noAds? " + PlayerPrefs.GetInt("noAdsPurchased"));
+
+        if (PlayerPrefs.GetInt("noAdsPurchased") == 1)
+            return;
+
         // Check if UnityAds ready before calling Show method:
         if (Advertisement.IsReady(rewardedAD))
         {
@@ -58,6 +51,9 @@ public class AdManager : MonoBehaviour, IUnityAdsListener
 
     public void ShowInterstitialAd()
     {
+        if (PlayerPrefs.GetInt("noAdsPurchased") == 1)
+            return;
+
         // Check if UnityAds ready before calling Show method:
         if (Advertisement.IsReady(interstitialAD))
         {

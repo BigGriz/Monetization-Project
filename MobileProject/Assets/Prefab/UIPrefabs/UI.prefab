@@ -8395,6 +8395,7 @@ GameObject:
   - component: {fileID: 7069767087970435496}
   - component: {fileID: 4705511168067151288}
   - component: {fileID: 9188196558081532623}
+  - component: {fileID: 3149756013445128446}
   m_Layer: 5
   m_Name: RemoveAds
   m_TagString: Untagged
@@ -8462,6 +8463,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3149756013445128446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053760707271344545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3f488ab1e02ce43a5ddd95cd39bc2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 2622489066650696942}
 --- !u!1 &5104780998249203862
 GameObject:
   m_ObjectHideFlags: 0
