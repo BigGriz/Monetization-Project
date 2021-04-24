@@ -57,7 +57,9 @@ public class TalentUI : MonoBehaviour
     /// <param name="_talent"></param>
     public void AddTalent(TalentSO _talent)
     {
-        talents.Add(_talent);
+        if (!talents.Contains(_talent))
+            talents.Add(_talent);
+
         GetTotals();
     }
 

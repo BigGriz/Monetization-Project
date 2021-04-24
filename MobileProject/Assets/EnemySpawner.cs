@@ -78,6 +78,7 @@ public class EnemySpawner : MonoBehaviour
 
             // apply buffs to enemies
             EnemyController enemy = temp.GetComponent<EnemyController>();
+            enemy.MultiplyStats((int)(settings.area) + (settings.stage * 1.8f));
             pointsToSpend -= enemy.points;
 
             spawnedEnemies.Add(temp);
@@ -88,6 +89,9 @@ public class EnemySpawner : MonoBehaviour
         GameObject boss = Instantiate(bossPrefabs[rand], this.transform);
         boss.transform.position += (Vector3)offsetTiling;
         offsetTiling += Random.Range(1.0f, 5.0f) * spacing;
+
+        EnemyController baws = boss.GetComponent<EnemyController>();
+        baws.MultiplyStats((int)(settings.area) + (settings.stage * 1.8f));
 
         spawnedEnemies.Add(boss);
     }

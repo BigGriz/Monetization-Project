@@ -46,5 +46,9 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 4376016370255298958, guid: c875797d8357d764d83409d18ac2f836, type: 3}
   - {fileID: 8141113866079242122, guid: 06dd9f024129a3b4382920bf7d3855a0, type: 3}
-  pointsToSpend: 100
+  bossPrefabs:
+  - {fileID: 8141113866079242122, guid: d2582cfe69aa5554da1c55d5efdd95f3, type: 3}
+  portalPrefab: {fileID: 339819813800808743, guid: fb6798df250efea4d9bb547d1d8fcd73, type: 3}
+  pointsToSpend: 30
   spacing: {x: 3, y: 0}
+  spawnedEnemies: []

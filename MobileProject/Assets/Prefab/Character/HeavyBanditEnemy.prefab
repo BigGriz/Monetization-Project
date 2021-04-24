@@ -453,3 +453,4 @@ MonoBehaviour:
   coinReward: 8
   points: 3
   isBoss: 0
+  damage: 7

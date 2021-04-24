@@ -95,7 +95,7 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
             image.sprite = gear.sprite;
             textComponents[0].SetText(gear.name);
             textComponents[1].SetText("LVL: " + gear.level.ToString());
-            textComponents[2].SetText("DMG: " + gear.damage.ToString());
+            textComponents[2].SetText("DMG: " + gear.damage.ToString() + ((gear.armour > 0) ? " ARM: " + gear.armour.ToString() : ""));
             textComponents[3].SetText(gear.upgradeCost.ToString());
 
             return;
@@ -119,7 +119,6 @@ public class GearSlot : MonoBehaviour, IPointerDownHandler
         EquipItem(gear);
 
         CallbackHandler.instance.UpdateUI();
-        AudioManager.instance.PlayAudio("UI");
     }
     #endregion PointerEvents
 

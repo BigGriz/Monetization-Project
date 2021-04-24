@@ -12,6 +12,8 @@ public class AudioButton : MonoBehaviour, IPointerDownHandler
     private void Start()
     {
         image = GetComponent<UnityEngine.UI.Image>();
+
+        image.sprite = AudioManager.instance.audioOn ? play : mute;
     }
 
     public void SwitchSprite()

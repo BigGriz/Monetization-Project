@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgPrefab: {fileID: 9162323358008676506, guid: 1ca6e8b230511cd459ed4934d8e6206c, type: 3}
-  offset: {x: 60, y: 0}
+  offset: {x: 62.1, y: 0}
   prevChunk: {fileID: 0}
   curChunk: {fileID: 0}

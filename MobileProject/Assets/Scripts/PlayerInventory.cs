@@ -64,6 +64,7 @@ public class PlayerInventory : MonoBehaviour
         if (xp >= xpRequired)
         {
             xp = 0;
+            xpRequired = Mathf.RoundToInt(xpRequired * 1.5f);
             level++;
             CallbackHandler.instance.ChangeMenu(MENUOPTION.TALENT);
             CallbackHandler.instance.TogglePause(true);
@@ -84,6 +85,16 @@ public class PlayerInventory : MonoBehaviour
             dmg += n.damage;
         }
         return (dmg);
+    }
+
+    public float GetArmorTotals()
+    {
+        float arm = 0;
+        foreach (Gear n in gear)
+        {
+            arm += n.armour;
+        }
+        return (arm);
     }
 
     public void GiveCoin(int _coin)

@@ -448,8 +448,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   hpBar: {fileID: 8141113865024465808}
-  health: 10
-  xpReward: 50
-  coinReward: 50
+  health: 30
+  xpReward: 30
+  coinReward: 30
   points: 0
   isBoss: 1
+  damage: 10

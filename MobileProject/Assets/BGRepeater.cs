@@ -24,6 +24,8 @@ public class BGRepeater : MonoBehaviour
     public void NewLevel()
     {
         offsetTiling = Vector2.zero;
+        Destroy(prevChunk);
+        Destroy(curChunk);
         AddChunk();
     }
 

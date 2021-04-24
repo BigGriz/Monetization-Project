@@ -53,7 +53,7 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    bool audioOn = true;
+    public bool audioOn = true;
     public void ToggleAudio()
     {
         audioOn = !audioOn;

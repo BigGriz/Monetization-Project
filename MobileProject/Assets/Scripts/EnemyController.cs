@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     public int coinReward;
     public int points;
     public bool isBoss;
+    public float damage;
 
     // Local Variables
     Vector2 moveVec;
@@ -81,6 +82,8 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float _damage)
     {
         currentHealth -= _damage;
+
+
         hp.UpdateHealth(currentHealth / health);
         if (currentHealth <= 0.0f)
         {
@@ -92,7 +95,7 @@ public class EnemyController : MonoBehaviour
     public void DealDamage()
     {
         if (collided)
-            collided.TakeDamage(5.0f);
+            collided.TakeDamage(damage * Random.Range(0.9f, 1.1f));
     }
 
     void Die()
@@ -109,6 +112,23 @@ public class EnemyController : MonoBehaviour
 
         if (isBoss)
             CallbackHandler.instance.SpawnPortal();
+    }
+
+    public void MultiplyStats(float _multiplier)
+    {
+        health *= _multiplier * _multiplier;
+        damage *= _multiplier;
+        xpReward = Mathf.RoundToInt(xpReward *_multiplier);
+        coinReward = Mathf.RoundToInt(coinReward * _multiplier);
+
+        if (isBoss)
+        {
+            health *= _multiplier;
+            damage *= _multiplier;
+            xpReward = Mathf.RoundToInt(xpReward * _multiplier);
+            coinReward = Mathf.RoundToInt(coinReward * _multiplier);
+        }
+        currentHealth = health;
     }
 
     #region CollisionChecks

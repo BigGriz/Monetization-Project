@@ -300,6 +300,7 @@ MonoBehaviour:
   coinReward: 4
   points: 2
   isBoss: 0
+  damage: 5
 --- !u!1 &4376016370974655849
 GameObject:
   m_ObjectHideFlags: 0

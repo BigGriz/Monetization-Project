@@ -23,6 +23,7 @@ public class CallbackHandler : MonoBehaviour
     {
         TogglePause(false);
         fader.Fade(false);
+        settings.stage = 1;
     }
     #endregion Singleton
 
@@ -137,14 +138,25 @@ public class CallbackHandler : MonoBehaviour
     
     public void FadeToNextLevel()
     {
-        Fade(true);
+        fader.fadeFunc -= NextLevel;
+        fader.fadeFunc -= SameLevel;
         fader.fadeFunc += NextLevel;
+        Fade(true);
     }
     public void FadeToSameLevel()
     {
-        Fade(true);
+        fader.fadeFunc -= NextLevel;
+        fader.fadeFunc -= SameLevel;
+        fader.fadeFunc += SameLevel;
         fader.fadeFunc += NextLevel;
+        Fade(true);
+    }
+
+    public void SameLevel()
+    {
         settings.stage--;
+
+        UpdateLevel(settings.area.ToString(), settings.stage);
     }
 }
 

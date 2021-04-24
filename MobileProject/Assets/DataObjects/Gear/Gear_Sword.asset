@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 9ad4ebda0f830974285972f66b3e88e4, type: 3}
   name: Sword
+  levelRequirement: 0
   level: 1
   damage: 1
-  upgradeCost: 1
   armour: 0
+  dmgUpgrade: 1
+  armUpgrade: 0
+  upgradeCost: 1

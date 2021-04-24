@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
 
         moveVec = Vector2.right;
-        currentHealth = health;
+        currentHealth = GetVariable(VariableType.HP);
 
         ahb = GetComponentInChildren<AttackHitBox>();
         anim = GetComponent<Animator>();
@@ -97,6 +97,16 @@ public class PlayerController : MonoBehaviour
         currentEnergy++;
         currentEnergy = Mathf.Clamp(currentEnergy, 0, energy);
         en.UpdateEnergy(currentEnergy / energy);
+
+        // If in range - Attack
+        if (collided)
+        {
+            attacking = false;
+            anim.SetTrigger("AttackClick");
+            return;
+        }
+        // If not in range - Dash forward
+        dashing = true;
     }
 
     void UpdateEnergy()
@@ -112,8 +122,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
-            GiveEnergy();
+        /*if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
+            GiveEnergy();*/
 
         currentEnergy = Mathf.Clamp(currentEnergy, 0, energy);
 
@@ -208,7 +218,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateHealth()
     {
-        if (currentHealth > health)
+        if (currentHealth > GetVariable(VariableType.HP))
             currentHealth -= Time.deltaTime * 3.0f;
     }
 
@@ -221,6 +231,9 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
+        hp.UpdateHealth(currentHealth / GetVariable(VariableType.HP));
+        HPTextUI.instance.SetText((int)currentHealth, (int)GetVariable(VariableType.HP));
 
         rb.velocity = (collided) ? Vector2.zero : (dashing) ? moveVec * moveSpeed * 5.0f : moveVec * moveSpeed;
 
@@ -263,7 +276,7 @@ public class PlayerController : MonoBehaviour
             FlurryAttack();
         }
 
-        if (!IsPointerOverUIObject())
+        /*if (!IsPointerOverUIObject())
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -294,7 +307,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             blocking = false;
-        }
+        }*/
 
         SetAnims();
     }
@@ -332,8 +345,8 @@ public class PlayerController : MonoBehaviour
             en.UpdateEnergy(currentEnergy / energy);
         }
 
-        currentHealth -= Mathf.Clamp(_damage - blockAmount, 0, _damage);
-        hp.UpdateHealth(currentHealth / health);
+        currentHealth -= Mathf.Clamp(_damage - GetVariable(VariableType.ARMOR), 0, _damage);
+        hp.UpdateHealth(currentHealth / GetVariable(VariableType.HP));
         if (currentHealth <= 0.0f)
         {
             Die();
@@ -350,9 +363,9 @@ public class PlayerController : MonoBehaviour
 
     public void ResetCharacter()
     {
-        currentHealth = health;
+        currentHealth = GetVariable(VariableType.HP);
         currentEnergy = 0;
-        hp.UpdateHealth(currentHealth / health);
+        hp.UpdateHealth(currentHealth / GetVariable(VariableType.HP));
         en.UpdateEnergy(currentEnergy / energy);
     }
 
@@ -366,7 +379,7 @@ public class PlayerController : MonoBehaviour
             if (vampirism)
             {
                 currentHealth += (GetVariable(VariableType.DAMAGE) / 2.0f) * (rage ? 2.0f : 1.0f);
-                hp.UpdateHealth(currentHealth / health);
+                hp.UpdateHealth(currentHealth / GetVariable(VariableType.HP));
             }
         }
     }
@@ -394,7 +407,11 @@ public class PlayerController : MonoBehaviour
             }
             case VariableType.HP:
             {
-                return Mathf.RoundToInt((health + talents.addedHealth) * talents.healthMultiplier);
+                return Mathf.RoundToInt((health + talents.addedHealth) * (1.0f + talents.healthMultiplier));
+            }
+            case VariableType.ARMOR:
+            {
+                return Mathf.RoundToInt(PlayerInventory.instance.GetArmorTotals());
             }
             default:
                 return 0.0f;
@@ -433,4 +450,5 @@ public enum VariableType
     DAMAGE,
     ATKSPD,
     HP,
+    ARMOR,
 }
