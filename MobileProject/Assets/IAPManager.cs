@@ -34,6 +34,12 @@ public class IAPManager : MonoBehaviour, IStoreListener
         }
     }
 
+    public void NoAds()
+    {
+        PlayerPrefs.SetInt("noAdsPurchased", 1);
+    }
+
+
     public void InitializePurchasing()
     {
         if (IsInitialized())
